@@ -1,0 +1,7 @@
+# IDE
+.idea/
+*.DotSettings.user
+
+# Build
+bin/
+obj/
