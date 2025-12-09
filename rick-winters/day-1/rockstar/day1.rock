@@ -1,0 +1,43 @@
+Rock Instructions with "L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L84"
+Position is 50
+atzero is 0
+clickedatzero is 0
+
+while Instructions ain't empty 
+  roll Instructions into move
+  shatter move into parts
+  roll parts into direction 
+  join parts into number
+  cast number with 10
+  shout direction
+  shout number
+  if direction = "L"
+    Let Position be Position minus number
+    while Position < 0
+      shout "adding 100"
+      shout position
+      Let clickedatzero be clickedatzero plus 1
+      Let Position be Position plus 100
+    end
+  end 
+  if direction is "R"
+    Let Position be Position plus number
+    while Position > 99
+      shout "removing 100"
+      shout position
+      Let clickedatzero be clickedatzero plus 1
+      Let Position be Position minus 100
+    end
+  end
+  if Position is 0
+    shout "Position at zero"
+    Let atzero be atzero + 1
+  end
+  shout Position
+  shout "---"
+end
+
+shout "At end"
+shout "atzero = "
+shout atzero
+shout clickedatzero

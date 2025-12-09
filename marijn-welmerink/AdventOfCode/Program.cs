@@ -8,6 +8,7 @@ public static class Program
     {
         var day1 = new Day1();
         var day2 = new Day2();
+        var day3 = new Day3();
 
         Console.WriteLine("=== Advent of Code 2025 ===");
         Console.WriteLine("The following are the results for each day's challenges.");
@@ -20,5 +21,8 @@ public static class Program
         Console.WriteLine("--- Day 2: Gift Shop ---");
         day2.PrintResult();
         Console.WriteLine();
+
+        Console.WriteLine("--- Day 3: Lobby ---");
+        day3.PrintResult();
     }
 }

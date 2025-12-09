@@ -50,6 +50,7 @@ public static class FileReader
         {
             InputFile.Day1Input => Path.Combine(assetFolder, "day-1-input.txt"),
             InputFile.Day2Input => Path.Combine(assetFolder, "day-2-input.txt"),
+            InputFile.Day3Input => Path.Combine(assetFolder, "day-3-input.txt"),
             _ => throw new ArgumentOutOfRangeException(nameof(inputFile), inputFile, null)
         };
     }
