@@ -1,0 +1,33 @@
+Rock the CosmicWheel with "L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L84"
+the library is metal lovestruck
+the zombies were convincing
+the skeletons were conversing
+a librarian is a lovestruck ladykiller
+
+while the CosmicWheel ain't empty
+  roll the CosmicWheel into Holy Words 
+  shatter Holy Words into the letters 
+  roll the letters into scrolls 
+  join the letters into the book 
+  cast the book with 10
+  if scrolls = "L" 
+    Let the library be the library minus the book
+    while the library is less than 0
+      let the library be the library plus a librarian
+      let the skeletons be the skeletons plus 1
+    end
+  end
+  if scrolls = "R"
+    let the library be the library plus the book
+    while the library is more than 99
+      let the library be the library minus a librarian
+      let the skeletons be the skeletons plus 1
+    end
+  end
+  if the library is 0
+    let the zombies be the zombies plus 1
+  end
+end
+
+shout the zombies
+whisper the skeletons

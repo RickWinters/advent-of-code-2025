@@ -6,5 +6,6 @@
 public enum InputFile
 {
     Day1Input,
-    Day2Input
+    Day2Input,
+    Day3Input
 }
