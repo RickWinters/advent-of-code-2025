@@ -3,7 +3,7 @@ using AoC.Helpers.Models;
 
 namespace AoC.Year2025;
 
-public class Day5() : DayBase(5)
+public class Day5(string dayPath) : DayBase(5, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -15,7 +15,7 @@ public class Day5() : DayBase(5)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         var ingredientRanges = TextInputHelper.ReadLinesAsStringList(DayPath);
         var allRanges = new List<LongRange>();
@@ -35,12 +35,15 @@ public class Day5() : DayBase(5)
             if (parsingRanges)
             {
                 var parts = ingredientRange.Split('-');
-                if (parts.Length == 2 && long.TryParse(parts[0], out var start) && long.TryParse(parts[1], out var end))
+                if (parts.Length != 2 || !long.TryParse(parts[0], out var start) ||
+                    !long.TryParse(parts[1], out var end))
                 {
-                    var newRange = new LongRange(start, end);
-                    ConsoleWrite($"new range {newRange}");
-                    allRanges.Add(newRange);
+                    continue;
                 }
+
+                var newRange = new LongRange(start, end);
+                ConsoleWrite($"new range {newRange}");
+                allRanges.Add(newRange);
             }
             else
             {
@@ -53,18 +56,20 @@ public class Day5() : DayBase(5)
         {
             foreach (var range in allRanges)
             {
-                if (range.Contains(freshId))
+                if (!range.Contains(freshId))
                 {
-                    amountFresh++;
-                    break;
+                    continue;
                 }
+
+                amountFresh++;
+                break;
             }
         }
 
         return amountFresh;
     }
 
-    public object Part2()
+    private object Part2()
     {
         var ingredientRanges = TextInputHelper.ReadLinesAsStringList(DayPath);
         var allRanges = new List<LongRange>();
@@ -82,12 +87,15 @@ public class Day5() : DayBase(5)
             foreach (var range in ranges)
             {
                 var parts = range.Split('-');
-                if (parts.Length == 2 && long.TryParse(parts[0], out var start) && long.TryParse(parts[1], out var end))
+                if (parts.Length != 2 || !long.TryParse(parts[0], out var start) ||
+                    !long.TryParse(parts[1], out var end))
                 {
-                    var newRange = new LongRange(start, end);
-                    ConsoleWrite($"{newRange}");
-                    allRanges.Add(newRange);
+                    continue;
                 }
+
+                var newRange = new LongRange(start, end);
+                ConsoleWrite($"{newRange}");
+                allRanges.Add(newRange);
             }
         }
 

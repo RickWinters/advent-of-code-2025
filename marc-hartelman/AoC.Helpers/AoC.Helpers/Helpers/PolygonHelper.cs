@@ -26,7 +26,7 @@ public static class PolygonHelper
     /// </summary>
     /// <param name="area">Area from Shoelace formula.</param>
     /// <param name="boundaryPoints">The number of points on the perimeter (usually the sum of steps taken).</param>
-    public static long CalculateInteriorPoints(long area, long boundaryPoints)
+    private static long CalculateInteriorPoints(long area, long boundaryPoints)
     {
         return area - (boundaryPoints / 2) + 1;
     }

@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day7() : DayBase(7)
+public class Day7(string dayPath) : DayBase(7, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,7 +14,7 @@ public class Day7() : DayBase(7)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         var beamTree = TextInputHelper.ReadLinesAs2DCharArray(DayPath);
 
@@ -37,13 +37,14 @@ public class Day7() : DayBase(7)
                 }
 
                 // replace "." with a "|" (beam)
-                if (current == '.')
+                if (current != '.')
                 {
-                    updates.Add((c, '|'));
-                }
-                // update left and right side with "|" if splitter "^" exists and char is "."
-                else if (current == '^')
-                {
+                    // update left and right side with "|" if splitter "^" exists and char is "."
+                    if (current != '^')
+                    {
+                        continue;
+                    }
+
                     // add canSplitCounter++ because it was able to split.
                     canSplitCounter++;
                     if (c > 0 && beamTree[r, c - 1] == '.')
@@ -55,6 +56,10 @@ public class Day7() : DayBase(7)
                     {
                         updates.Add((c + 1, '|'));
                     }
+                }
+                else
+                {
+                    updates.Add((c, '|'));
                 }
             }
 
@@ -68,8 +73,8 @@ public class Day7() : DayBase(7)
         return canSplitCounter;
         //return string.Join(Environment.NewLine, beamTree.Select(x => new string(x)));
     }
-    
-    public object Part2()
+
+    private object Part2()
     {
         var beamTree = TextInputHelper.ReadLinesAs2DCharArray(DayPath);
         var rows = beamTree.GetLength(0);
@@ -81,11 +86,13 @@ public class Day7() : DayBase(7)
         // Initialize set 1 in the Pascals Triangle where S is the starting position of beamTree
         for (var col = 0; col < cols; col++)
         {
-            if (beamTree[0, col] == 'S')
+            if (beamTree[0, col] != 'S')
             {
-                beamTreePascalsTriangle[0, col] = 1;
-                break;
+                continue;
             }
+
+            beamTreePascalsTriangle[0, col] = 1;
+            break;
         }
 
         for (var row = 1; row < rows; row++)

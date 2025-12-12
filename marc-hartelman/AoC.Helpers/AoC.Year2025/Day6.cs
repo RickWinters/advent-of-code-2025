@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day6() : DayBase(6)
+public class Day6(string dayPath) : DayBase(6, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,7 +14,7 @@ public class Day6() : DayBase(6)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         // Read the input as a string grid, handling irregular spaces
         var grid = TextInputHelper.ReadSpaceSeparated2DArray(DayPath, x => x);
@@ -34,16 +34,18 @@ public class Day6() : DayBase(6)
             // Process all rows except the last one (which contains the operator)
             for (var r = 0; r < rows - 1; r++)
             {
-                if (long.TryParse(grid[r, c], out var number))
+                if (!long.TryParse(grid[r, c], out var number))
                 {
-                    if (op == "*")
-                    {
-                        colResult *= number;
-                    }
-                    else
-                    {
-                        colResult += number;
-                    }
+                    continue;
+                }
+
+                if (op == "*")
+                {
+                    colResult *= number;
+                }
+                else
+                {
+                    colResult += number;
                 }
             }
             ConsoleWrite($"{colResult}");
@@ -54,7 +56,7 @@ public class Day6() : DayBase(6)
         return grandTotal;
     }
 
-    public object Part2()
+    private object Part2()
     {
         // Use the fixed-width reader to preserve padding
         var gridColumns = TextInputHelper.ReadFixedColumnGrid(DayPath);
@@ -93,18 +95,20 @@ public class Day6() : DayBase(6)
                     }
                 }
 
-                if (!string.IsNullOrEmpty(verticalNumStr))
+                if (string.IsNullOrEmpty(verticalNumStr))
                 {
-                    ConsoleWrite($"{verticalNumStr}");
-                    var val = long.Parse(verticalNumStr);
-                    if (op == "*")
-                    {
-                        colResult *= val;
-                    }
-                    else
-                    {
-                        colResult += val;
-                    }
+                    continue;
+                }
+
+                ConsoleWrite($"{verticalNumStr}");
+                var val = long.Parse(verticalNumStr);
+                if (op == "*")
+                {
+                    colResult *= val;
+                }
+                else
+                {
+                    colResult += val;
                 }
             }
 

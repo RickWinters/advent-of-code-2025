@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day2() : DayBase(2)
+public class Day2(string dayPath) : DayBase(2, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,7 +14,7 @@ public class Day2() : DayBase(2)
         };
     }
 
-    public long Part1()
+    private long Part1()
     {
         long inValidIds = 0;
         
@@ -23,7 +23,7 @@ public class Day2() : DayBase(2)
 
         foreach (var range in ranges)
         {
-            for (var i = range.begin; i <= range.end; i++)
+            for (var i = range.Begin; i <= range.End; i++)
             {
                 if (i.ToString().Length % 2 != 0 || i <= 9)
                 {
@@ -49,7 +49,7 @@ public class Day2() : DayBase(2)
         return inValidIds;
     }
 
-    public long Part2()
+    private long Part2()
     {
         long inValidIds = 0;
         
@@ -58,7 +58,7 @@ public class Day2() : DayBase(2)
         
         foreach (var range in ranges)
         {
-            for (var i = range.begin; i <= range.end; i++)
+            for (var i = range.Begin; i <= range.End; i++)
             {
                 // regex pattern couldve been used bool isPattern = Regex.IsMatch(s, @"^(.+)\1+$");
                 
@@ -93,12 +93,14 @@ public class Day2() : DayBase(2)
                     }
                     
                     // if we found a repeating character break out of the loop
-                    if (isRepeating)
+                    if (!isRepeating)
                     {
-                        ConsoleWrite($"invalid id found: {i}");
-                        inValidIds += i;
-                        break;
+                        continue;
                     }
+
+                    ConsoleWrite($"invalid id found: {i}");
+                    inValidIds += i;
+                    break;
                 }
             }
         }
@@ -106,5 +108,5 @@ public class Day2() : DayBase(2)
         return inValidIds;
     }
 
-    private record Range(long begin, long end);
+    private record Range(long Begin, long End);
 }

@@ -25,8 +25,9 @@ public readonly record struct LongRange(long Start, long End)
     /// </summary>
     public LongRange? GetIntersection(LongRange other)
     {
-        if (!Intersects(other)) return null;
-        return new LongRange(Math.Max(Start, other.Start), Math.Min(End, other.End));
+        return !Intersects(other) 
+            ? null 
+            : new LongRange(Math.Max(Start, other.Start), Math.Min(End, other.End));
     }
     
     public LongRange? GetUnion(LongRange other)

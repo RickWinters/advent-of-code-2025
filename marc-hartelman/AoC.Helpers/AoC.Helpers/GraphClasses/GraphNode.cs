@@ -1,6 +1,4 @@
-﻿using AoC.Helpers.GraphClasses;
-
-namespace AoC.Helpers;
+﻿namespace AoC.Helpers.GraphClasses;
 
 public class GraphNode<T> where T : notnull
 {

@@ -15,7 +15,7 @@ public readonly record struct Point3D(int X, int Y, int Z)
         long dx = X - other.X;
         long dy = Y - other.Y;
         long dz = Z - other.Z;
-        long distSq = dx * dx + dy * dy + dz * dz;
+        var distSq = dx * dx + dy * dy + dz * dz;
         return distSq;
     }
 

@@ -3,7 +3,7 @@ using AoC.Helpers.Models;
 
 namespace AoC.Year2025;
 
-public class Day8() : DayBase(8)
+public class Day8(string dayPath) : DayBase(8, dayPath)
 {
     //Kruskal's Algorithm: Building Minimum Spanning Trees by adding edges and checking if endpoints are already connected.
     public override object RunDay(int part)
@@ -16,7 +16,7 @@ public class Day8() : DayBase(8)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         var input = TextInputHelper.ReadLinesAsList(DayPath, s =>
         {
@@ -33,18 +33,20 @@ public class Day8() : DayBase(8)
 
         foreach (var (u, v, _) in sortedPairs)
         {
-            int groupU = groupIds[u];
-            int groupV = groupIds[v];
+            var groupU = groupIds[u];
+            var groupV = groupIds[v];
 
-            if (groupU != groupV)
+            if (groupU == groupV)
             {
-                // Merge groups: update all nodes having groupV to groupU
-                for (int k = 0; k < groupIds.Length; k++)
+                continue;
+            }
+
+            // Merge groups: update all nodes having groupV to groupU
+            for (var k = 0; k < groupIds.Length; k++)
+            {
+                if (groupIds[k] == groupV)
                 {
-                    if (groupIds[k] == groupV)
-                    {
-                        groupIds[k] = groupU;
-                    }
+                    groupIds[k] = groupU;
                 }
             }
         }
@@ -66,7 +68,7 @@ public class Day8() : DayBase(8)
         return result;
     }
 
-    public object Part2()
+    private object Part2()
     {
         var input = TextInputHelper.ReadLinesAsList(DayPath, s =>
         {
@@ -82,36 +84,40 @@ public class Day8() : DayBase(8)
         var groupIds = Enumerable.Range(0, input.Count).ToArray();
         
         // amount of groups.
-        int distinctGroups = input.Count;
+        var distinctGroups = input.Count;
 
         foreach (var (u, v, _) in sortedPairs)
         {
-            int groupU = groupIds[u];
-            int groupV = groupIds[v];
+            var groupU = groupIds[u];
+            var groupV = groupIds[v];
 
             ConsoleWrite($"{groupU}, {groupV}, {distinctGroups}");
-            
-            if (groupU != groupV)
+
+            if (groupU == groupV)
             {
-                // Merge groups: replace all instances of groupV with groupU
-                for (int k = 0; k < groupIds.Length; k++)
-                {
-                    if (groupIds[k] == groupV)
-                    {
-                        groupIds[k] = groupU;
-                    }
-                }
+                continue;
+            }
 
-                distinctGroups--;
-
-                // If only 1 group remains, everyone is connected return the last connection distance
-                if (distinctGroups == 1)
+            // Merge groups: replace all instances of groupV with groupU
+            for (var k = 0; k < groupIds.Length; k++)
+            {
+                if (groupIds[k] == groupV)
                 {
-                    var p1 = input[u];
-                    var p2 = input[v];
-                    return (long)p1.X * p2.X;
+                    groupIds[k] = groupU;
                 }
             }
+
+            distinctGroups--;
+
+            // If only 1 group remains, everyone is connected return the last connection distance
+            if (distinctGroups != 1)
+            {
+                continue;
+            }
+
+            var p1 = input[u];
+            var p2 = input[v];
+            return (long)p1.X * p2.X;
         }
 
         return 0;
@@ -121,17 +127,17 @@ public class Day8() : DayBase(8)
     {
         var pairs = new List<(int p1Idx, int p2Idx, long distSq)>();
         // Iterate over the complete input connecting every box and calculate the distance.
-        for (int i = 0; i < input.Count; i++)
+        for (var i = 0; i < input.Count; i++)
         {
             // skip yourself (i + 1)
-            for (int j = i + 1; j < input.Count; j++)
+            for (var j = i + 1; j < input.Count; j++)
             {
                 var p1 = input[i];
                 var p2 = input[j];
                 long dx = p1.X - p2.X;
                 long dy = p1.Y - p2.Y;
                 long dz = p1.Z - p2.Z;
-                long distSq = dx * dx + dy * dy + dz * dz;
+                var distSq = dx * dx + dy * dy + dz * dz;
                 // add pair to pairs with distance (this will create 1-2 with a distance 1-3, then 2-3 etc.)
                 // save the index of the points
                 pairs.Add((i, j, distSq));

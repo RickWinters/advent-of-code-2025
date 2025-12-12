@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day1() : DayBase(1)
+public class Day1(string dayPath) : DayBase(1, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,21 +14,21 @@ public class Day1() : DayBase(1)
         };
     }
 
-    public int Part1()
+    private int Part1()
     {
         var initialValue = 50;
         var password = 0;
         
-        var lines = TextInputHelper.ReadLinesAsList(DayPath, x => new combination(x[0] == 'L' ? DirectionCombination.L : DirectionCombination.R, int.Parse(x[1..])));
+        var lines = TextInputHelper.ReadLinesAsList(DayPath, x => new Combination(x[0] == 'L' ? DirectionCombination.L : DirectionCombination.R, int.Parse(x[1..])));
 
         foreach (var line in lines)
         {
-            if (line.direction == DirectionCombination.L)
+            if (line.Direction == DirectionCombination.L)
             {
-                initialValue -= line.distance;
-            }else if (line.direction == DirectionCombination.R)
+                initialValue -= line.Distance;
+            }else if (line.Direction == DirectionCombination.R)
             {
-                initialValue += line.distance;
+                initialValue += line.Distance;
             }
 
             if (initialValue % 100 == 0)
@@ -42,26 +42,26 @@ public class Day1() : DayBase(1)
         return password;
     }
 
-    public int Part2()
+    private int Part2()
     {
         var initialValue = 50;
         var password = 0;
         
-        var lines = TextInputHelper.ReadLinesAsList(DayPath, x => new combination(x[0] == 'L' ? DirectionCombination.L : DirectionCombination.R, int.Parse(x[1..])));
+        var lines = TextInputHelper.ReadLinesAsList(DayPath, x => new Combination(x[0] == 'L' ? DirectionCombination.L : DirectionCombination.R, int.Parse(x[1..])));
 
         foreach (var line in lines)
         {
             var currentValue = initialValue;
             
-            if (line.direction == DirectionCombination.L)
+            if (line.Direction == DirectionCombination.L)
             {
-                initialValue -= line.distance;
-            }else if (line.direction == DirectionCombination.R)
+                initialValue -= line.Distance;
+            }else if (line.Direction == DirectionCombination.R)
             {
-                initialValue += line.distance;
+                initialValue += line.Distance;
             }
 
-            for (var i = currentValue; i != initialValue; i += line.direction == DirectionCombination.L ? -1 : 1)
+            for (var i = currentValue; i != initialValue; i += line.Direction == DirectionCombination.L ? -1 : 1)
             {
                 if (i % 100 == 0) password++;
             }
@@ -73,7 +73,7 @@ public class Day1() : DayBase(1)
     }
 }
 
-public record combination(DirectionCombination direction, int distance);
+public record Combination(DirectionCombination Direction, int Distance);
 
 
 public enum DirectionCombination

@@ -4,9 +4,9 @@ public abstract class DayBase
 {
     protected string DayPath { get; }
     public bool WriterEnabled { get; set; }
-    public DayBase(int day)
+    public DayBase(int day, string dayPath)
     {
-        DayPath = $"D:\\AoC\\2025\\{day}.txt";
+        DayPath = dayPath;
     }
 
     protected void ConsoleWrite(string text)

@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day4() : DayBase(4)
+public class Day4(string dayPath) : DayBase(4, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,32 +14,36 @@ public class Day4() : DayBase(4)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         var canPickUpRolls = 0;
         
         var inputGrid = TextInputHelper.ReadLinesAs2DArray(DayPath, x => new GridSpecification(x == '@'));
-        for (int i = 0; i < inputGrid.GetLength(0); i++)
+        for (var i = 0; i < inputGrid.GetLength(0); i++)
         {
-            for (int j = 0; j < inputGrid.GetLength(1); j++)
+            for (var j = 0; j < inputGrid.GetLength(1); j++)
             {
-                if (inputGrid[i, j].IsPaper)
+                if (!inputGrid[i, j].IsPaper)
                 {
-                    var neighbors = inputGrid.GetNeighbors(i, j, true).ToList();
-                    var canPickUp = neighbors.Count(x => x.Value.IsPaper) < 4;
-                    if (canPickUp)
-                    {
-                        ConsoleWrite($"location: {i},{j} -- can pick up");
-                        canPickUpRolls++;
-                    }
+                    continue;
                 }
+
+                var neighbors = inputGrid.GetNeighbors(i, j, true).ToList();
+                var canPickUp = neighbors.Count(x => x.Value.IsPaper) < 4;
+                if (!canPickUp)
+                {
+                    continue;
+                }
+
+                ConsoleWrite($"location: {i},{j} -- can pick up");
+                canPickUpRolls++;
             }
         }
 
         return canPickUpRolls;
     }
 
-    public object Part2()
+    private object Part2()
     {
         var canPickUpRolls = 0;
         
@@ -67,23 +71,25 @@ public class Day4() : DayBase(4)
                 }
             }
 
-            if (toRemove.Count > 0)
+            if (toRemove.Count <= 0)
             {
-                ConsoleWrite($"amount to remove: {toRemove.Count} -- removed");
-                canPickUpRolls += toRemove.Count;
-                ConsoleWrite($"total picked up: {canPickUpRolls} -- pickd up");
-                foreach (var (r, c) in toRemove)
-                {
-                    // Update the grid: change character to '.' and isPaper to false
-                    inputGrid[r, c] = new GridSpecification(false);
-                }
-                
-                stilCanPickUp = true;
+                continue;
             }
+
+            ConsoleWrite($"amount to remove: {toRemove.Count} -- removed");
+            canPickUpRolls += toRemove.Count;
+            ConsoleWrite($"total picked up: {canPickUpRolls} -- pickd up");
+            foreach (var (r, c) in toRemove)
+            {
+                // Update the grid: change character to '.' and isPaper to false
+                inputGrid[r, c] = new GridSpecification(false);
+            }
+                
+            stilCanPickUp = true;
         } while (stilCanPickUp);
 
         return canPickUpRolls;
     }
 
-    public record GridSpecification(bool IsPaper);
+    private record GridSpecification(bool IsPaper);
 }

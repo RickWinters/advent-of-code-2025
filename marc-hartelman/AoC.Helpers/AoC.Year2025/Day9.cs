@@ -3,7 +3,7 @@ using AoC.Helpers.Models;
 
 namespace AoC.Year2025;
 
-public class Day9() : DayBase(9)
+public class Day9(string dayPath) : DayBase(9, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -15,17 +15,17 @@ public class Day9() : DayBase(9)
         };
     }
 
-    public object Part1()
+    private object Part1()
     {
         // no need for explanation 
         var corners = TextInputHelper.ReadLinesAsList(DayPath,
             x => new Point2D(int.Parse(x.Split(",")[0]), int.Parse(x.Split(",")[1])));
 
-        List<Rect> rectangles = new List<Rect>();
+        var rectangles = new List<Rect>();
 
-        for (int i = 0; i < corners.Count; i++)
+        for (var i = 0; i < corners.Count; i++)
         {
-            for (int j = 0; j < corners.Count; j++)
+            for (var j = 0; j < corners.Count; j++)
             {
                 var p1 = corners[i];
                 var p2 = corners[j];
@@ -38,16 +38,16 @@ public class Day9() : DayBase(9)
     }
 
     // Raycasting
-    public object Part2()
+    private object Part2()
     {
         var corners = TextInputHelper.ReadLinesAsList(DayPath,
             x => new Point2D(int.Parse(x.Split(",")[0]), int.Parse(x.Split(",")[1])));
 
         List<Rect> rectangles = new List<Rect>();
 
-        for (int i = 0; i < corners.Count; i++)
+        for (var i = 0; i < corners.Count; i++)
         {
-            for (int j = 0; j < corners.Count; j++)
+            for (var j = 0; j < corners.Count; j++)
             {
                 var p1 = corners[i];
                 var p2 = corners[j];

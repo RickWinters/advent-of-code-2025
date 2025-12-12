@@ -8,7 +8,6 @@ public record DirectedSearchState(Point2D Position, Direction Facing, long Cost)
 {
     public int CompareTo(DirectedSearchState? other)
     {
-        if (other is null) return 1;
-        return Cost.CompareTo(other.Cost);
+        return other != null ? Cost.CompareTo(other.Cost) : 1;
     }
 }

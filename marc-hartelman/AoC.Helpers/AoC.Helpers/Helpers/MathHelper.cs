@@ -5,7 +5,7 @@ public static class MathHelper
     /// <summary>
     /// Calculates the Greatest Common Divisor (GCD) of two numbers.
     /// </summary>
-    public static long Gcd(long a, long b)
+    private static long Gcd(long a, long b)
     {
         while (b != 0)
         {
@@ -19,7 +19,7 @@ public static class MathHelper
     /// <summary>
     /// Calculates the Least Common Multiple (LCM) of two numbers.
     /// </summary>
-    public static long Lcm(long a, long b)
+    private static long Lcm(long a, long b)
     {
         return (a / Gcd(a, b)) * b;
     }

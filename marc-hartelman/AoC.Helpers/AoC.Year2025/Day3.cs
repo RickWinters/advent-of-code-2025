@@ -2,7 +2,7 @@
 
 namespace AoC.Year2025;
 
-public class Day3() : DayBase(3)
+public class Day3(string dayPath) : DayBase(3, dayPath)
 {
     public override object RunDay(int part)
     {
@@ -14,29 +14,33 @@ public class Day3() : DayBase(3)
         };
     }
 
-    public int Part1()
+    private int Part1()
     {
-        int output = 0;
+        var output = 0;
         
         var batteries =
-            TextInputHelper.ReadLinesAsList(DayPath, x => x.ToString().Select(x => int.Parse(x.ToString())).ToList());
+            TextInputHelper.ReadLinesAsList(DayPath, x => x.ToString().Select(c => int.Parse(c.ToString())).ToList());
 
         foreach (var battery in batteries)
         {
-            int max = 0;
-            int nextMax = 0;
+            var max = 0;
+            var nextMax = 0;
             for (var index = 0; index < battery.Count; index++)
             {
                 var i = battery[index];
-                if (i > nextMax)
+                if (i <= nextMax)
                 {
-                    nextMax = i;
-                    if (nextMax > max && index + 1 != battery.Count)
-                    {
-                        max = i;
-                        nextMax = 0;
-                    }
+                    continue;
                 }
+
+                nextMax = i;
+                if (nextMax <= max || index + 1 == battery.Count)
+                {
+                    continue;
+                }
+
+                max = i;
+                nextMax = 0;
             }
         
             var currentOutput = max.ToString() + nextMax.ToString();
@@ -55,10 +59,10 @@ public class Day3() : DayBase(3)
         return output;
     }
 
-    public long Part2()
+    private long Part2()
     {
         long output = 0;
-        var batteries = TextInputHelper.ReadLinesAsList(DayPath, x => x.ToString().Select(x => int.Parse(x.ToString())).ToList());
+        var batteries = TextInputHelper.ReadLinesAsList(DayPath, x => x.ToString().Select(c => int.Parse(c.ToString())).ToList());
             
         foreach (var battery in batteries)
         {
@@ -106,7 +110,7 @@ public class Day3() : DayBase(3)
     /// <param name="batteryPower"></param>
     /// <param name="targetBatteries"></param>
     /// <returns></returns>
-    private string GetMaxJoltage(List<int> batteryPower, int targetBatteries)
+    private static string GetMaxJoltage(List<int> batteryPower, int targetBatteries)
     {
         // removable digits from stack, when counter reaches 0 no possible removal left and everything should be stored to the stack.
         var toRemove = batteryPower.Count - targetBatteries;

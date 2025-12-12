@@ -9,7 +9,7 @@ public static class DimensionalArrayHelper
     /// <summary>
     /// Checks if the given coordinates are valid within the grid boundaries.
     /// </summary>
-    public static bool IsInBounds<T>(this T[,] grid, int row, int col)
+    private static bool IsInBounds<T>(this T[,] grid, int row, int col)
     {
         return row >= 0 && row < grid.GetLength(0) &&
                col >= 0 && col < grid.GetLength(1);
@@ -148,11 +148,13 @@ public static class DimensionalArrayHelper
             foreach (var neighbor in grid.GetNeighbors(r, c, includeDiagonals))
             {
                 // Check if not visited and matches criteria
-                if (!visited.Contains((neighbor.Row, neighbor.Col)) && match(neighbor.Value))
+                if (visited.Contains((neighbor.Row, neighbor.Col)) || !match(neighbor.Value))
                 {
-                    visited.Add((neighbor.Row, neighbor.Col));
-                    queue.Enqueue((neighbor.Row, neighbor.Col));
+                    continue;
                 }
+
+                visited.Add((neighbor.Row, neighbor.Col));
+                queue.Enqueue((neighbor.Row, neighbor.Col));
             }
         }
     }
@@ -228,7 +230,10 @@ public static class DimensionalArrayHelper
         Func<T, bool> isTarget,
         Dictionary<(int Row, int Col), int> cache)
     {
-        if (!grid.IsInBounds(r, c)) return 0;
+        if (!grid.IsInBounds(r, c))
+        {
+            return 0;
+        }
 
         // Check cache first to see if we already calculated paths from this spot
         if (cache.TryGetValue((r, c), out var count))
@@ -244,7 +249,7 @@ public static class DimensionalArrayHelper
             return 1;
         }
 
-        int totalPaths = 0;
+        var totalPaths = 0;
         foreach (var neighbor in grid.GetNeighbors(r, c))
         {
             // If we can step to the neighbor (e.g., next == current + 1)
