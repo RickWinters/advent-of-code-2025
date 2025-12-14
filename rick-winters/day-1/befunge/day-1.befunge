@@ -1,17 +1,15 @@
-"28L 41R 99L 1L 55L 06R 5L 84R 03L 68L"v                     |
-v                                      <
- "Loop over the numbers and try to store the instructions"
- x "store ascii value of zero"                       88*3g
- x "current counter of y location for instruction"   88*4g
- x "current index of instruction"                    88*5g
- x "current x location for instruction"              88*6g
- x "number of instructions left"                     88*7g
-
- Push initial Values to stack
-> 0 88*3p 25*2* 88*4p  v
- v                     <                       < THis loops stores a single instruction
-                       > 15g 1- 15p 16g 1+ 16p ^
- > 16g 14g p 15g 13g ` | "If count is not 0" 
- ^ <                   > 17g 1- 17p 14g 1+ 14p "0" 16p "3" 15p v
-   | ` g31 g71                                                 <
-   @ 
+"28L 41R 99L 10L 55L 06R 50L 84R 03L 86L"v 
+  v+1<           v               <B       
+Gv<  |`"L" g10g20<p50p40p10       E#<    <
+00^-1<vp70+1g70p20-**25*25g20  <  F $v_v  
+02        > 02g52*52**52*2*+1+`|  U p0 0  
+0p    >    v             >#   #<v N 66 3  
+9>05g1-05p^>02g52*2*1+`  |        G 0g`g  
+0 vp70+1g70p20+**25*25g20<        E -1", 
+Byv  #A#D#V#E#N#T#O#F#C#O#D#E#  <   ^<0" 
+RM Winters>#2#0#2#5#D#a#y#1#     ^   <"  
+  >05g"0"`|       >05g52*+05p04g1-04p^g" 
+Prints    >04g"0"`|v p30+1g30        <6, 
+n instructions    > 02g52*52**52*2*+`|00 
+ending on 0,       >                 >^7 
+Then n number of turns total to 0   @,g<
